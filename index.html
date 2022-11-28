@@ -4,21 +4,70 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Document</title>
 </head>
 <body>
-    <div id="fila_caja">
-        <h2 id="tag_fila_caja"></h2>
-        <h3></h3>
+    <div>
+        <h1 id="Tiempo_Transcurrido" style="text-align: center;">Tiempo Transcurrido: </h1>
     </div>
-    <div id="caja"></div>
-    <div id="fila_preenjuage"></div>
-    <div id="preenjuague"></div>
-    <div id="fila_lavado"></div>
-    <div id="lavado"></div>
-    <div id="fila_secado/encerado"></div>
-    <div id="secado/encerado"></div>
+    <hr></hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5">
+                    <h2>Llegada</h2>
+                    <h4 id="Llegada_lavado"></h4>
+                    <h4 id="Llegada_transcurrido"></h4>
+                    <h4 id="Siguete_Llegada">Siguiente en: </h3>
+            </div>     
+            <div class="col-sm-1"></div>
+            <div class="col-sm-5">
+                    <h2>Lavado</h2>
+            </div>            
+        </div>
+        <hr></hr>
+        <div class="row">
+            <div class="col-sm-5">
+                <div id="fila_caja">
+                    <h2>Caja</h2>
+                    <h4 id="value_fila_caja"></h3>
+                    <h4 id="Siguiente_Caja">Siguente en:</h3>
+                </div>
+                <div id="caja"></div>
+            </div>          
+            <div class="col-sm-1"></div>
+            <div class="col-sm-5">
+
+            </div> 
+        </div>
+        <hr></hr>
+        <div class="row">
+            <div class="col-sm-5">
+                <div id="fila_preenjuage">
+                    <h2>Pre Enjuague</h2>
+                    <h4 id="Siguiente_pre_enjuague">Siguente en:</h3>
+                    <h4 id="value_fila_pre_enjuague"></h3>
+                </div>
+            </div>    
+            <div class="col-sm-1"></div>
+            <div class="col-sm-5">
+
+            </div> 
+        </div>
+    </div>
+
+            
+        
+            <div id="fila_lavado"></div>
+            <div id="lavado"></div>
+            <div id="fila_secado/encerado"></div>
+            <div id="secado/encerado"></div>
+
+
     <script src="js/generadores.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
