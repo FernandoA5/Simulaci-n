@@ -31,6 +31,8 @@ let lastUpdate = Date.now();
 let myInterval = setInterval(tick, 0);
 let dt = 0;
 let contador=0;
+let secado_empezado=false;
+let AutosTotalesAtendidos=0;
 
 function tick() {
     let now = Date.now();
@@ -49,8 +51,7 @@ function simulacion()
     let DeltaTLlegada = TLlegada-TLlegadaTranscurrido;llegadaDisponible=false;
     if(DeltaTLlegada==0){
         if(filaCobro < LIM_FILA){
-            filaCobro++;llegadaDisponible=true; //PARECE QUE ENTRA AQUÍ Y SE AUMENTA
-            //PERO DESPUES SE REDUCE EN ALGUNA PARTE
+            filaCobro++;llegadaDisponible=true;
         }
         if(filaCobro==LIM_FILA){ //SI LA FILA ESTÁ LLENA
             llegadaDisponible=true
@@ -96,22 +97,27 @@ function simulacion()
         TSecado1Transcurrido=0;
     }
     let DeltaTSecado1=TSecado1-TSecado1Transcurrido; secado1Disponible=false;
+    TSecado1Transcurrido=(secado1Disponible==false && filaSecado!=0)?TSecado1Transcurrido+1:TSecado1Transcurrido;
     if(DeltaTSecado1==0){
-        secado1Disponible=true;
-        filaSecado=(filaSecado==0)?filaSecado:filaSecado-1;
+        if(filaSecado!=0){
+            secado1Disponible=true;AutosTotalesAtendidos++;
+            filaSecado--;
+        }
     }
-    TSecado1Transcurrido++;
-
     if(secado2Disponible==true){ //SECADO 2
         TSecado2=generadorSecado();
         TSecado2Transcurrido=0;
-    }
+    } //AHORA ALGO ESTÁ MAL: EL SEGUNDO EMPIEZA A TRABAJAR; PERO CUANDO EL PRIMERO TERMINA SU TRABAJO EL SEGUNDO
+    //SE DETIENE (PORQUE SOLO TRABAJA CUANDO LA FILA ES )
     let DeltaTSecado2=TSecado2-TSecado2Transcurrido; secado2Disponible=false;
+    secado_empezado=(secado2Disponible==false && filaSecado!=0 && filaSecado!=1)?true:secado_empezado;
+    TSecado2Transcurrido=(secado2Disponible==false && filaSecado!=0 && secado_empezado)?TSecado2Transcurrido+1:TSecado2Transcurrido;
     if(DeltaTSecado2==0){
-        secado2Disponible=true;
-        filaSecado=(filaSecado==0)?filaSecado:filaSecado-1;
+        if(filaSecado!=0){
+            secado2Disponible=true; AutosTotalesAtendidos++;
+            filaSecado--; secado_empezado=false;
+        }
     }
-    TSecado2Transcurrido++;
 
     //CONSOLES:LOG
     document.getElementById("TLlegada").innerHTML="Llegada: "+TLlegada+" seg";
@@ -146,6 +152,7 @@ function simulacion()
     //console.log();
     //break;
     document.getElementById("Tiempo_Transcurrido").innerHTML="Tiempo Transcurrido: "+tiempo;
+    document.getElementById("Autos_totales").innerHTML="Autos Totales Atendidos: "+AutosTotalesAtendidos;
 
 
     tiempo++;

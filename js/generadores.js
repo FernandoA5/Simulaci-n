@@ -16,5 +16,5 @@ function generadorLavado(){
 }
 function generadorSecado(){
     // return parseInt(Math.random() * (10 - 1) + 1);
-    return 4;
+    return 5;
 }
