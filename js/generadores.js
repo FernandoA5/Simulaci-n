@@ -11,7 +11,8 @@ function generadorLavado(){
     return generador(3.13, 0.99)*60;
 }
 function generadorSecado(){
-    return generador(8.38, 1.92)*60;
+    //return generador(8.38, 1.92)*60;
+    return 1000;
 }
 
 function generador(media, desv_est){

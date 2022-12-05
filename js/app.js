@@ -32,6 +32,7 @@ let myInterval = setInterval(tick, 0);
 let dt = 0;
 let contador=0;
 let secado_empezado=false;
+let comprobacion_secado_empezado=false;
 let AutosTotalesAtendidos=0;
 let pause=false;
 let vel=1;
@@ -111,7 +112,8 @@ function simulacion()
         TSecado1=generadorSecado();TSecado1Transcurrido=0;
     }
     let DeltaTSecado1=TSecado1-TSecado1Transcurrido; secado1Disponible=false;
-    TSecado1Transcurrido=(secado1Disponible==false && filaSecado!=0)?TSecado1Transcurrido+1:TSecado1Transcurrido;
+    comprobacion_secado_empezado=!(filaSecado==1 && secado_empezado==true);
+    TSecado1Transcurrido=(secado1Disponible==false && filaSecado!=0 && comprobacion_secado_empezado)?TSecado1Transcurrido+1:TSecado1Transcurrido;
     if(DeltaTSecado1==0){
         if(filaSecado!=0){
             secado1Disponible=true;AutosTotalesAtendidos++;
@@ -119,12 +121,10 @@ function simulacion()
         }
     }
     if(secado2Disponible==true){ //SECADO 2
-        TSecado2=generadorSecado();
-        TSecado2Transcurrido=0;
-    } //AHORA ALGO ESTÁ MAL: EL SEGUNDO EMPIEZA A TRABAJAR; PERO CUANDO EL PRIMERO TERMINA SU TRABAJO EL SEGUNDO
-    //SE DETIENE (PORQUE SOLO TRABAJA CUANDO LA FILA ES )
+        TSecado2=generadorSecado();TSecado2Transcurrido=0;
+    }
     let DeltaTSecado2=TSecado2-TSecado2Transcurrido; secado2Disponible=false;
-    secado_empezado=(secado2Disponible==false && filaSecado!=0 && filaSecado!=1)?true:secado_empezado;
+    secado_empezado=(secado2Disponible==false && filaSecado>1)?true:secado_empezado;
     TSecado2Transcurrido=(secado2Disponible==false && filaSecado!=0 && secado_empezado)?TSecado2Transcurrido+1:TSecado2Transcurrido;
     if(DeltaTSecado2==0){
         if(filaSecado!=0){
