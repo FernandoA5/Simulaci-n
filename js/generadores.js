@@ -1,18 +1,17 @@
 function generadorLlegada(){
-    return generador(8, 3.3)*60;
+    return parseInt(generador(8, 3.3)*60);
 }
 function generadorCobro(){
-    return generador(2.13, 0.83)*60;
+    return parseInt(generador(2.13, 0.83)*60);
 }
 function generadorPreEnjuague(){
-    return generador(3.25, 0.71)*60;
+    return parseInt(generador(3.25, 0.71)*60);
 }
 function generadorLavado(){
-    return generador(3.13, 0.99)*60;
+    return parseInt(generador(3.13, 0.99)*60);
 }
 function generadorSecado(){
-    //return generador(8.38, 1.92)*60;
-    return 1000;
+    return parseInt(generador(8.38, 1.92)*60);
 }
 
 function generador(media, desv_est){
@@ -22,5 +21,5 @@ function generador(media, desv_est){
         sumR+=R;
     }
     normal=media+ (desv_est*(sumR-6))+1;
-    return Math.floor(normal);
+    return normal.toFixed(1);
 }
