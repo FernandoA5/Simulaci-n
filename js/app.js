@@ -33,16 +33,31 @@ let dt = 0;
 let contador=0;
 let secado_empezado=false;
 let AutosTotalesAtendidos=0;
+let pause=false;
+let vel=1;
+
+document.getElementById("pause").addEventListener("click", ()=>{
+    pause=(pause==true)?false:true;
+});
+document.getElementById("increase").addEventListener("click", ()=>{
+    vel++;
+});
+document.getElementById("decrease").addEventListener("click", ()=>{
+    vel = (vel>1)?vel-1:vel;
+});
 
 function tick() {
-    let now = Date.now();
-    dt = now - lastUpdate;
-    if(dt>=1000){
-        lastUpdate=now;
-        simulacion()
-        contador++;
+    if(pause==false){
+        let now = Date.now();
+        dt = now - lastUpdate;
+        if(dt>=1000/vel){
+            lastUpdate=now;
+            simulacion()
+            contador++;
+        }
     }
 }
+
 function simulacion()
 {
     if (llegadaDisponible==true)  { //LLEGADA
@@ -93,8 +108,7 @@ function simulacion()
         }
     }
     if(secado1Disponible==true){//SECADO 1
-        TSecado1=generadorSecado();
-        TSecado1Transcurrido=0;
+        TSecado1=generadorSecado();TSecado1Transcurrido=0;
     }
     let DeltaTSecado1=TSecado1-TSecado1Transcurrido; secado1Disponible=false;
     TSecado1Transcurrido=(secado1Disponible==false && filaSecado!=0)?TSecado1Transcurrido+1:TSecado1Transcurrido;
@@ -151,9 +165,9 @@ function simulacion()
     document.getElementById("value_fila_secado2").innerHTML="Fila: "+filaSecado+" autos";
     //console.log();
     //break;
-    document.getElementById("Tiempo_Transcurrido").innerHTML="Tiempo Transcurrido: "+tiempo;
+    document.getElementById("Tiempo_Transcurrido").innerHTML="Tiempo Transcurrido: "+(tiempo + 1)+" seg";
     document.getElementById("Autos_totales").innerHTML="Autos Totales Atendidos: "+AutosTotalesAtendidos;
-
-
+    document.getElementById("velocidad").innerHTML="Vel: x"+vel;
+    
     tiempo++;
 }
