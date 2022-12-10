@@ -75,12 +75,12 @@ function simulacion()
     }
     TLlegadaTranscurrido=(llegadaDisponible==false && filaCobro<LIM_FILA)?TLlegadaTranscurrido+1:TLlegadaTranscurrido;
 
-    if(cobroDisponible==true){ //COBRO  //NUNCA ENTRAMOS
+    if(cobroDisponible==true){ //COBRO  
         TCobro=generadorCobro(); TCobroTranscurrido=0;
     }
     let DeltaTCobro= TCobro-TCobroTranscurrido;cobroDisponible=false;
     TCobroTranscurrido=(cobroDisponible==false && filaPreEnjuage<LIM_FILA && filaCobro!=0)?TCobroTranscurrido+1:TCobroTranscurrido;
-    if(DeltaTCobro==0){ //NUNCA ENTRAMOS
+    if(DeltaTCobro==0){
         if(filaPreEnjuage<LIM_FILA && filaCobro!=0){
             filaPreEnjuage++;cobroDisponible=true;
             filaCobro--;
