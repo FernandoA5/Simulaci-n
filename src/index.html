@@ -10,75 +10,89 @@
 </head>
 <body>
     <div class="text-center">
-        <h2 id="Tiempo_Transcurrido">Tiempo Transcurrido: </h2>
+        <h1 id="Tiempo_Transcurrido">Tiempo Transcurrido: </h1>
         <h3 id="Autos_totales">Autos Totales Atendidos: </h3>
         <div id="controls" class="text-center">
-            <button id="increase">Velocidad++</button>
-            <button id="pause">Pausa</button>
             <button id="decrease">Velocidad--</button>
-            <h4 id="velocidad">Vel:</h4>
+            <button id="pause">Pausa</button>
+            <button id="increase">Velocidad++</button>
+            <h4 id="velocidad">Velocidad:</h4>
         </div>
     </div>
 
     <hr></hr>
     <div class="container" class="text-center">
         <div class="row">
-            <div class="col-sm-5">
-                    <h3>Llegada</h3>
-                    <h4 id="TLlegada"></h4>
-                    <h4 id="Llegada_transcurrido"></h4>
-                    <h4 id="Siguete_Llegada">Siguiente en: </h3>
-            </div>     
-            <div class="col-sm-1"></div>
-            <div class="col-sm-1"></div>
-            <div class="col-sm-5">
-                    <h3>Lavado</h3>
-                    <h4 id="TLavado"></h4>
-                    <h4 id="Lavado_transcurrido"></h4>
-                    <h4 id="Siguiente_Lavado">Siguiente en: </h3>
-                    <h4 id="value_fila_lavado"></h3>
-            </div>            
-        </div>
-        <div class="row">
-            <div class="col-sm-5">
-                <div id="fila_caja">
-                    <h3>Caja</h3>
-                    <h4 id="TCaja"></h4>
-                    <h4 id="Cobro_transcurrido"></h4>
-                    <h4 id="Siguiente_Caja">Siguente en:</h3>
-                    <h4 id="value_fila_caja"></h3>
+            <div class="col-md-8">
+                <h2>Estaciones</h2>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                            <h4>Llegada</h4>
+                            <h5 id="TLlegada"></h5>
+                            <h5 id="Llegada_transcurrido"></h5>
+                            <h5 id="Siguete_Llegada">Siguiente en: </h5>
+                    </div>     
+                    <div class="col-md-5">
+                            <h4>Lavado</h4>
+                            <h5 id="TLavado"></h5>
+                            <h5 id="Lavado_transcurrido"></h5>
+                            <h5 id="Siguiente_Lavado">Siguiente en: </h5>
+                            <h5 id="value_fila_lavado"></h5>
+                    </div>  
+                    <div class="col-md-1"></div>     
                 </div>
-                <div id="caja"></div>
-            </div>          
-            <div class="col-sm-1"></div>
-            <div class="col-sm-1"></div>
-            <div class="col-sm-5">
-                    <h3>Secado 1</h3>
-                    <h4 id="TSecado1"></h4>
-                    <h4 id="Secado1_transcurrido"></h4>
-                    <h4 id="Siguiente_Secado1">Siguente en:</h3>
-                    <h4 id="value_fila_secado1"></h3>
-            </div> 
-        </div>
-        <div class="row">
-            <div class="col-sm-5">
-                <div id="fila_preenjuage">
-                    <h3>Pre Enjuague</h3>
-                    <h4 id="Pre-Enjuague"></h4>
-                    <h4 id="Pre_Enjuague_transcurrido"></h4>
-                    <h4 id="Siguiente_pre_enjuague">Siguente en:</h3>
-                    <h4 id="value_fila_pre_enjuague"></h3>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <div id="fila_caja">
+                            <h4>Caja</h4>
+                            <h5 id="TCaja"></h5>
+                            <h5 id="Cobro_transcurrido"></h5>
+                            <h5 id="Siguiente_Caja">Siguente en:</h5>
+                            <h5 id="value_fila_caja"></h5>
+                        </div>
+                        <div id="caja"></div>
+                    </div>          
+                    <div class="col-md-5">
+                            <h4>Secado 1</h4>
+                            <h5 id="TSecado1"></h5>
+                            <h5 id="Secado1_transcurrido"></h5>
+                            <h5 id="Siguiente_Secado1">Siguente en:</h5>
+                            <h5 id="value_fila_secado1"></h5>
+                    </div> 
+                    <div class="col-md-1"></div>
                 </div>
-            </div>    
-            <div class="col-sm-1"></div>
-            <div class="col-sm-1"></div>
-            <div class="col-sm-5">
-                    <h3>Secado 2</h3>
-                    <h4 id="TSecado2"></h4>
-                    <h4 id="Secado2_transcurrido"></h4>
-                    <h4 id="Siguiente_Secado2">Siguente en:</h3>
-                    <h4 id="value_fila_secado2"></h3>
-            </div> 
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <div id="fila_preenjuage">
+                            <h4>Pre Enjuague</h4>
+                            <h5 id="Pre-Enjuague"></h5>
+                            <h5 id="Pre_Enjuague_transcurrido"></h5>
+                            <h5 id="Siguiente_pre_enjuague">Siguente en:</h5>
+                            <h5 id="value_fila_pre_enjuague"></h5>
+                        </div>
+                    </div>    
+                    <div class="col-md-5">
+                            <h4>Secado 2</h4>
+                            <h5 id="TSecado2"></h5>
+                            <h5 id="Secado2_transcurrido"></h5>
+                            <h5 id="Siguiente_Secado2">Siguente en:</h5>
+                            <h5 id="value_fila_secado2"></h5>
+                    </div> 
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div id="panel-autos">
+                    <h2>Autos Atendidos</h2>
+                    <div class="col-md-12">
+                        <ul id="lista"></ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

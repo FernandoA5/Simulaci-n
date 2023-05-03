@@ -1,3 +1,4 @@
+
 const TIEMPO_MAXIMO = 1000;
 const LIM_FILA=4;
 let tiempo=0;
@@ -26,6 +27,9 @@ let filaCobro=0;
 let filaPreEnjuage=0;
 let filaLavado=0;
 let filaSecado=0;
+
+let autos=[];
+
 
 let lastUpdate = Date.now();
 let myInterval = setInterval(tick, 0);
@@ -167,7 +171,54 @@ function simulacion()
     //break;
     document.getElementById("Tiempo_Transcurrido").innerHTML="Tiempo Transcurrido: "+(tiempo + 1)+" seg";
     document.getElementById("Autos_totales").innerHTML="Autos Totales Atendidos: "+AutosTotalesAtendidos;
-    document.getElementById("velocidad").innerHTML="Vel: x"+vel;
+    document.getElementById("velocidad").innerHTML="Velocidad: x"+vel;
+
+    //Enlistamos los autos
+    let lista = document.getElementById("lista");
+    lista.innerHTML = autos.map(autos => `<li>${autos}</li>`).join('');
     
     tiempo++;
+}
+
+
+class auto {
+    id;
+    tiempoLlegada;
+    tiempoCobro;
+    tiempoPreEnjuague;
+    tiempoLavado;
+    tiempoSecado;
+    constructor(id){
+        this.id=id;
+    }
+    set tiempoLlegada(tiempoLlegada){
+        this.tiempoLlegada=tiempoLlegada;
+    }
+    set tiempoCobro(tiempoCobro){
+        this.tiempoCobro=tiempoCobro;
+    }
+    set tiempoPreEnjuague(tiempoPreEnjuague){
+        this.tiempoPreEnjuague=tiempoPreEnjuague;
+    }
+    set tiempoLavado(tiempoLavado){
+        this.tiempoLavado=tiempoLavado;
+    }
+    set tiempoSecado(tiempoSecado){
+        this.tiempoSecado=tiempoSecado;
+    }
+    get tiempoLlegada(){
+        return this.tiempoLlegada;
+    }
+    get tiempoCobro(){
+        return this.tiempoCobro;
+    }
+    get tiempoPreEnjuague(){
+        return this.tiempoPreEnjuague;
+    }
+    get tiempoLavado(){
+        return this.tiempoLavado;
+    }
+    get tiempoSecado(){
+        return this.tiempoSecado;
+    }
 }
