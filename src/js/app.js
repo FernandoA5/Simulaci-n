@@ -41,6 +41,8 @@ let AutosTotalesAtendidos=0;
 let pause=false;
 let vel=1;
 
+let filaCobroQueue = [];
+
 document.getElementById("pause").addEventListener("click", ()=>{
     pause=(pause==true)?false:true;
 });
@@ -67,6 +69,7 @@ function simulacion()
 {
     if (llegadaDisponible==true)  { //LLEGADA
         TLlegada=generadorLlegada(); TLlegadaTranscurrido=0;
+        
     }
     let DeltaTLlegada = TLlegada-TLlegadaTranscurrido;llegadaDisponible=false;
     if(DeltaTLlegada==0){
@@ -181,7 +184,7 @@ function simulacion()
 }
 
 
-class auto {
+class Auto {
     id;
     tiempoLlegada;
     tiempoCobro;

@@ -16,7 +16,7 @@ body{
 }
 button{
     border-radius: 25px;
-    
+    padding-top: 6px !important;
 }
 #decrease{
     background-color: rgb(51, 214, 243);
@@ -40,12 +40,16 @@ h2{
     text-align: center;
     background-color: rgb(51, 214, 243);
     border-radius: 25px;
+    padding-top: 6px !important;
+    color: white !important;
+    font-weight: bold !important;
 }
 
 .col-md-5{
     background-color: white;
     padding: 5px;
     margin: 4px;
+    border-radius: 10px;
 }
 .col-md-12{
     text-align: center;
