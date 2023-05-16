@@ -41,7 +41,14 @@ let AutosTotalesAtendidos=0;
 let pause=false;
 let vel=1;
 
-let filaCobroQueue = [];
+let listaAutos=[];
+let listaAutosYaAtendidos=[];
+
+let lista_tiempo_cobro=[];
+let lista_tiempo_preenjuague=[];
+let lista_tiempo_lavado=[];
+let lista_tiempo_secado=[];
+let lista_tiempo_secado2=[];
 
 document.getElementById("pause").addEventListener("click", ()=>{
     pause=(pause==true)?false:true;
@@ -65,6 +72,14 @@ function tick() {
     }
 }
 
+class Auto{
+    constructor(){
+        this.tiempoEntrada=0;
+        this.tiempoSalida=0;
+        this.sum_atencion=0;
+    }
+}
+
 function simulacion()
 {
     if (llegadaDisponible==true)  { //LLEGADA
@@ -83,7 +98,13 @@ function simulacion()
     TLlegadaTranscurrido=(llegadaDisponible==false && filaCobro<LIM_FILA)?TLlegadaTranscurrido+1:TLlegadaTranscurrido;
 
     if(cobroDisponible==true){ //COBRO  
-        TCobro=generadorCobro(); TCobroTranscurrido=0;
+        TCobro=generadorCobro(); 
+        TCobroTranscurrido=0;
+        let auto=new Auto();
+        auto.tiempoEntrada=tiempo;
+        listaAutos.push(auto);
+
+        lista_tiempo_cobro.push(TCobro);
     }
     let DeltaTCobro= TCobro-TCobroTranscurrido;cobroDisponible=false;
     TCobroTranscurrido=(cobroDisponible==false && filaPreEnjuage<LIM_FILA && filaCobro!=0)?TCobroTranscurrido+1:TCobroTranscurrido;
@@ -96,6 +117,7 @@ function simulacion()
     
     if(preenjuagueDisponible==true){//PREENGUAJE
         TPreEnjuague=generadorPreEnjuague(); TPreEnjuagueTranscurrido=0;
+        lista_tiempo_preenjuague.push(TPreEnjuague);
     } 
     let DeltaTPreEnjuague= TPreEnjuague-TPreEnjuagueTranscurrido;preenjuagueDisponible=false;
     TPreEnjuagueTranscurrido=(preenjuagueDisponible==false && filaLavado<LIM_FILA && filaPreEnjuage!=0)?TPreEnjuagueTranscurrido+1:TPreEnjuagueTranscurrido;
@@ -107,6 +129,7 @@ function simulacion()
 
     if(lavadoDisponible==true){//LAVADO
         TLavado=generadorLavado(); TLavadoTranscurrido=0;
+        lista_tiempo_lavado.push(TLavado);
     }
     let DeltaTLavado=TLavado-TLavadoTranscurrido;lavadoDisponible=false;
     TLavadoTranscurrido=(lavadoDisponible==false && filaSecado<LIM_FILA && filaLavado!=0)?TLavadoTranscurrido+1:TLavadoTranscurrido;
@@ -117,6 +140,7 @@ function simulacion()
     }
     if(secado1Disponible==true){//SECADO 1
         TSecado1=generadorSecado();TSecado1Transcurrido=0;
+        lista_tiempo_secado.push(TSecado1);
     }
     let DeltaTSecado1=TSecado1-TSecado1Transcurrido; secado1Disponible=false;
     comprobacion_secado_empezado=!(filaSecado==1 && secado_empezado==true);
@@ -125,10 +149,25 @@ function simulacion()
         if(filaSecado!=0){
             secado1Disponible=true;AutosTotalesAtendidos++;
             filaSecado--;
+            
+            //MARCAMOS TIEMPO DE SALIDA Y SACAMOS EL AUTO DE LA LISTA 
+            listaAutos[0].tiempoSalida=tiempo;
+            
+            listaAutos[0].sum_atencion=
+                lista_tiempo_cobro.shift()+
+                lista_tiempo_preenjuague.shift()+
+                lista_tiempo_lavado.shift()+
+                lista_tiempo_secado.shift();
+
+            let auto=listaAutos.shift();
+
+            //AGREGAMOS EL AUTO A LA LISTA DE AUTOS ATENDIDOS
+            listaAutosYaAtendidos.push(auto);
         }
     }
     if(secado2Disponible==true){ //SECADO 2
         TSecado2=generadorSecado();TSecado2Transcurrido=0;
+        lista_tiempo_secado2.push(TSecado2);
     }
     let DeltaTSecado2=TSecado2-TSecado2Transcurrido; secado2Disponible=false;
     secado_empezado=(secado2Disponible==false && filaSecado>1)?true:secado_empezado;
@@ -137,10 +176,27 @@ function simulacion()
         if(filaSecado!=0){
             secado2Disponible=true; AutosTotalesAtendidos++;
             filaSecado--; secado_empezado=false;
+
+            //MARCAMOS TIEMPO DE SALIDA Y SACAMOS EL AUTO DE LA LISTA 
+            listaAutos[0].tiempoSalida=tiempo;
+            
+            listaAutos[0].sum_atencion=
+                lista_tiempo_cobro.shift()+
+                lista_tiempo_preenjuague.shift()+
+                lista_tiempo_lavado.shift()+
+                lista_tiempo_secado2.shift();
+                
+            let auto=listaAutos.shift();
+
+            //AGREGAMOS EL AUTO A LA LISTA DE AUTOS ATENDIDOS
+            listaAutosYaAtendidos.push(auto);
         }
     }
 
     //CONSOLES:LOG
+    console.log("Autos: "+listaAutos);
+    console.log("Atendidos: "+listaAutosYaAtendidos);
+
     document.getElementById("TLlegada").innerHTML="Llegada: "+TLlegada+" seg";
     document.getElementById("Siguete_Llegada").innerHTML="Siguente Llegada en: "+DeltaTLlegada+" seg";
     document.getElementById("Llegada_transcurrido").innerHTML="Tiempo Transcurrido: "+TLlegadaTranscurrido+" seg";
@@ -178,50 +234,16 @@ function simulacion()
 
     //Enlistamos los autos
     let lista = document.getElementById("lista");
-    lista.innerHTML = autos.map(autos => `<li>${autos}</li>`).join('');
+    lista.innerHTML = listaAutosYaAtendidos.map((auto, index) => 
+            `<li>Auto ${index +1}: ${auto.tiempoSalida-auto.tiempoEntrada}seg</li>`
+        ).join('');
     
+    let lista_atención = document.getElementById("lista_atención");
+    lista_atención.innerHTML = listaAutosYaAtendidos.map( (auto, index) =>
+        
+        `<li>Auto ${index +1}: ${auto.sum_atencion}seg</li>`
+
+    ).join('');
+
     tiempo++;
-}
-
-
-class Auto {
-    id;
-    tiempoLlegada;
-    tiempoCobro;
-    tiempoPreEnjuague;
-    tiempoLavado;
-    tiempoSecado;
-    constructor(id){
-        this.id=id;
-    }
-    set tiempoLlegada(tiempoLlegada){
-        this.tiempoLlegada=tiempoLlegada;
-    }
-    set tiempoCobro(tiempoCobro){
-        this.tiempoCobro=tiempoCobro;
-    }
-    set tiempoPreEnjuague(tiempoPreEnjuague){
-        this.tiempoPreEnjuague=tiempoPreEnjuague;
-    }
-    set tiempoLavado(tiempoLavado){
-        this.tiempoLavado=tiempoLavado;
-    }
-    set tiempoSecado(tiempoSecado){
-        this.tiempoSecado=tiempoSecado;
-    }
-    get tiempoLlegada(){
-        return this.tiempoLlegada;
-    }
-    get tiempoCobro(){
-        return this.tiempoCobro;
-    }
-    get tiempoPreEnjuague(){
-        return this.tiempoPreEnjuague;
-    }
-    get tiempoLavado(){
-        return this.tiempoLavado;
-    }
-    get tiempoSecado(){
-        return this.tiempoSecado;
-    }
 }
